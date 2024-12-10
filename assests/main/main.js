@@ -1,5 +1,14 @@
 function sortearPares() {
-  const participantes = ["Wanessa", "Wellington", "Nadja", "Gabriel"];
+  const participantes = [
+    "Wanessa",
+    "Wellington",
+    "Nadja",
+    "Gabriel",
+    "Eduarda",
+    "Rafael",
+    "Martô",
+    "Josilene",
+  ];
 
   for (let i = participantes.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
