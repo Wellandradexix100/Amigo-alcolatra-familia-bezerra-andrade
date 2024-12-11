@@ -1,11 +1,11 @@
 const participantes = [
+  "Martô",
   "Eduarda",
   "Wanessa",
   "Wellington",
   "Nadja",
   "Gabriel",
   "Rafael",
-  "Martô",
   "Josilene",
 ];
 
