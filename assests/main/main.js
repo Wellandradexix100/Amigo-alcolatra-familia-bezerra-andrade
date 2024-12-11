@@ -1,53 +1,46 @@
-function sortearPares() {
-  const participantes = [
-    "Wanessa",
-    "Wellington",
-    "Nadja",
-    "Gabriel",
-    "Eduarda",
-    "Rafael",
-    "Martô",
-    "Josilene",
-  ];
+const participantes = [
+  "Eduarda",
+  "Wanessa",
+  "Wellington",
+  "Nadja",
+  "Gabriel",
+  "Rafael",
+  "Martô",
+  "Josilene",
+];
 
-  for (let i = participantes.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [participantes[i], participantes[j]] = [participantes[j], participantes[i]];
+let jaSorteou = [];
+let jaFoiSorteado = [];
+let sorteanteAtual = 0;
+
+function sortear() {
+  const sorteadosSection = document.getElementById("sorteados");
+
+  if (jaSorteou.length === participantes.length) {
+    sorteadosSection.innerHTML = `
+      <p>🎉 Sorteio concluído!🎉</p>
+      <p>Partiu encher o cu de cana 🍻</p>
+    `;
+    return;
   }
 
-  const pares = [];
-  for (let i = 0; i < participantes.length; i += 2) {
-    if (i + 1 < participantes.length) {
-      pares.push(`${participantes[i]} e ${participantes[i + 1]}`);
-    } else {
-      pares.push(`${participantes[i]} (sem par)`);
-    }
-  }
+  const sorteante = participantes[sorteanteAtual];
+  let sorteado;
 
-  const resultadoDiv = document.getElementById("sorteados");
-  resultadoDiv.innerHTML = "<h2>Pares Sorteados:</h2><ul>";
-  pares.forEach((par) => {
-    resultadoDiv.innerHTML += `<li>${par}</li>`;
-  });
-  resultadoDiv.innerHTML += "</ul>";
+  do {
+    const indiceSorteado = Math.floor(Math.random() * participantes.length);
+    sorteado = participantes[indiceSorteado];
+  } while (sorteado === sorteante || jaFoiSorteado.includes(sorteado));
+
+  jaSorteou.push(sorteante);
+  jaFoiSorteado.push(sorteado);
+
+  sorteadosSection.innerHTML = `
+    <p><strong>${sorteante}</strong> sorteou: <strong>${sorteado}</strong>!</p>
+    <p>Agora é a vez de <strong>${sorteado}</strong> sortear!</p>
+  `;
+
+  sorteanteAtual = participantes.indexOf(sorteado);
 }
 
-function iniciarContagemRegressiva() {
-  const resultadoDiv = document.getElementById("sorteados");
-  let contagem = 3;
-  resultadoDiv.innerHTML = `<h2>${contagem}</h2>`;
-
-  const intervalId = setInterval(() => {
-    contagem--;
-    if (contagem >= 0) {
-      resultadoDiv.innerHTML = `<h2>${contagem}</h2>`;
-    } else {
-      clearInterval(intervalId);
-      sortearPares();
-    }
-  }, 1000);
-}
-
-document
-  .getElementById("sortear")
-  .addEventListener("click", iniciarContagemRegressiva);
+document.getElementById("sortear").addEventListener("click", sortear);
